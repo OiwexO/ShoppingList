@@ -1,7 +1,7 @@
 package com.iwex.shoppinglist.domain
 
-class GetShopItemListUseCase {
+class GetShopItemListUseCase(private val shopItemRepository: ShopItemRepository) {
     fun getShopItemList(): List<ShopItem> {
-        TODO()
+        return shopItemRepository.getShopItemList()
     }
 }
