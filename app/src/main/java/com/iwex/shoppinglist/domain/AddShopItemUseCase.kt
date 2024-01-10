@@ -1,7 +1,7 @@
 package com.iwex.shoppinglist.domain
 
-class AddShopItemUseCase {
-    fun addShopItem(item: ShopItem) {
-        TODO()
+class AddShopItemUseCase(private val shopItemRepository: ShopItemRepository) {
+    fun addShopItem(shopItem: ShopItem) {
+        shopItemRepository.addShopItem(shopItem)
     }
 }
