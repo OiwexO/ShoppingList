@@ -1,7 +1,7 @@
 package com.iwex.shoppinglist.domain
 
 interface ShopItemRepository {
-    fun addShopItem(item: ShopItem)
+    fun addShopItem(shopItem: ShopItem)
 
     fun deleteShopItem(shopItem: ShopItem)
 
