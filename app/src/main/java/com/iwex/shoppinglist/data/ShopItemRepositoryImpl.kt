@@ -4,13 +4,20 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.iwex.shoppinglist.domain.ShopItem
 import com.iwex.shoppinglist.domain.ShopItemRepository
-import java.lang.RuntimeException
+import kotlin.random.Random
 
 object ShopItemRepositoryImpl : ShopItemRepository {
     private val shopItemListLiveData = MutableLiveData<List<ShopItem>>()
-    private val shopItemList = mutableListOf<ShopItem>()
+    private val shopItemList = sortedSetOf<ShopItem>({ o1, o2 -> o1.id.compareTo(o2.id) })
 
     private var autoIncrementId = 0
+
+    init {
+        for (i in 0 until 1000) {
+            val item = ShopItem("Name $i", i, Random.nextBoolean())
+            addShopItem(item)
+        }
+    }
 
     override fun addShopItem(shopItem: ShopItem) {
         if (shopItem.id == ShopItem.UNDEFINED_ID) {
