@@ -15,6 +15,9 @@ class ShopItemListAdapter : RecyclerView.Adapter<ShopItemListAdapter.ShopItemVie
             notifyDataSetChanged()
         }
 
+    var onShopItemClickListener: ((ShopItem) -> Unit)? = null
+    var onShopItemLongClickListener: ((ShopItem) -> Unit)? = null
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
@@ -36,7 +39,11 @@ class ShopItemListAdapter : RecyclerView.Adapter<ShopItemListAdapter.ShopItemVie
         val item = shopItemList[position]
         holder.textViewShopItemName.text = item.name
         holder.textViewShopItemAmount.text = item.amount.toString()
+        holder.view.setOnClickListener {
+            onShopItemClickListener?.invoke(item)
+        }
         holder.view.setOnLongClickListener {
+            onShopItemLongClickListener?.invoke(item)
             true
         }
     }
