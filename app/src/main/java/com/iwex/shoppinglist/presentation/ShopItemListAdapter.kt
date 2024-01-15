@@ -1,23 +1,12 @@
 package com.iwex.shoppinglist.presentation
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ListAdapter
 import com.iwex.shoppinglist.R
 import com.iwex.shoppinglist.domain.ShopItem
 
-class ShopItemListAdapter : RecyclerView.Adapter<ShopItemListAdapter.ShopItemViewHolder>() {
-    var shopItemList = listOf<ShopItem>()
-        set(value) {
-            val callback = ShopItemListDiffCallback(shopItemList, value)
-            val diffResult = DiffUtil.calculateDiff(callback)
-            diffResult.dispatchUpdatesTo(this)
-            field = value
-        }
-
+class ShopItemListAdapter : ListAdapter<ShopItem, ShopItemViewHolder>(ShopItemDiffCallback()) {
     var onShopItemClickListener: ((ShopItem) -> Unit)? = null
     var onShopItemLongClickListener: ((ShopItem) -> Unit)? = null
 
@@ -39,7 +28,7 @@ class ShopItemListAdapter : RecyclerView.Adapter<ShopItemListAdapter.ShopItemVie
         holder: ShopItemViewHolder,
         position: Int,
     ) {
-        val item = shopItemList[position]
+        val item = currentList[position]
         holder.textViewShopItemName.text = item.name
         holder.textViewShopItemAmount.text = item.amount.toString()
         holder.view.setOnClickListener {
@@ -52,17 +41,8 @@ class ShopItemListAdapter : RecyclerView.Adapter<ShopItemListAdapter.ShopItemVie
     }
 
     override fun getItemViewType(position: Int): Int {
-        val item = shopItemList[position]
+        val item = currentList[position]
         return if (item.enabled) VIEW_TYPE_ENABLED else VIEW_TYPE_DISABLED
-    }
-
-    override fun getItemCount(): Int {
-        return shopItemList.size
-    }
-
-    class ShopItemViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        val textViewShopItemName: TextView = view.findViewById(R.id.textViewItemName)
-        val textViewShopItemAmount: TextView = view.findViewById(R.id.textViewItemAmount)
     }
 
     companion object {
