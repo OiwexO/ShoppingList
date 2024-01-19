@@ -7,5 +7,5 @@ import com.iwex.shoppinglist.R
 
 class ShopItemViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
     val textViewShopItemName: TextView = view.findViewById(R.id.textViewItemName)
-    val textViewShopItemAmount: TextView = view.findViewById(R.id.textViewItemAmount)
+    val textViewShopItemCount: TextView = view.findViewById(R.id.textViewItemCount)
 }

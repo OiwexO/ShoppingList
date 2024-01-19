@@ -2,7 +2,7 @@ package com.iwex.shoppinglist.domain
 
 data class ShopItem(
     val name: String,
-    val amount: Int,
+    val count: Int,
     val enabled: Boolean,
     var id: Int = UNDEFINED_ID,
 ) {

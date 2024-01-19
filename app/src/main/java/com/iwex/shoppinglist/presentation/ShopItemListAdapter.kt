@@ -30,7 +30,7 @@ class ShopItemListAdapter : ListAdapter<ShopItem, ShopItemViewHolder>(ShopItemDi
     ) {
         val item = currentList[position]
         holder.textViewShopItemName.text = item.name
-        holder.textViewShopItemAmount.text = item.amount.toString()
+        holder.textViewShopItemCount.text = item.count.toString()
         holder.view.setOnClickListener {
             onShopItemClickListener?.invoke(item)
         }

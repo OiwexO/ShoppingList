@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Shopping List</string>
     <string name="add_shop_item">Add shop item</string>
+    <string name="hint_name">Name:</string>
+    <string name="hint_count">Count:</string>
+    <string name="label_save">Save</string>
+    <string name="error_incorrect_name">Incorrect name</string>
+    <string name="error_incorrect_count">Incorrect count</string>
 </resources>
