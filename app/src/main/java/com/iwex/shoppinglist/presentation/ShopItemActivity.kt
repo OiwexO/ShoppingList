@@ -15,7 +15,9 @@ class ShopItemActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shop_item)
         parseIntent()
-        setScreenMode()
+        if (savedInstanceState == null) {
+            launchShopItemFragment()
+        }
     }
 
     private fun parseIntent() {
@@ -35,7 +37,7 @@ class ShopItemActivity : AppCompatActivity() {
         }
     }
 
-    private fun setScreenMode() {
+    private fun launchShopItemFragment() {
         val fragment =
             when (screenMode) {
                 MODE_ADD -> ShopItemFragment.newInstanceAddItem()
@@ -43,7 +45,7 @@ class ShopItemActivity : AppCompatActivity() {
                 else -> throw RuntimeException("Unknown screen mode: $screenMode")
             }
         supportFragmentManager.beginTransaction()
-            .add(R.id.shopItemFragmentContainer, fragment)
+            .replace(R.id.shopItemFragmentContainer, fragment)
             .commit()
     }
 

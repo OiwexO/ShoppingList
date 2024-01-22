@@ -2,6 +2,7 @@ package com.iwex.shoppinglist.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentContainerView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.SimpleCallback
@@ -14,10 +15,14 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var shopItemsListAdapter: ShopItemListAdapter
     private lateinit var rvShopItemsList: RecyclerView
+    private var shopItemFragmentContainer: FragmentContainerView? = null
+    private val isPortraitMode: Boolean
+        get() = shopItemFragmentContainer == null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        shopItemFragmentContainer = findViewById(R.id.shopItemFragmentContainer)
         setupRecyclerView()
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         viewModel.shopItemList.observe(this) {
@@ -25,8 +30,12 @@ class MainActivity : AppCompatActivity() {
         }
         val buttonAddItem = findViewById<FloatingActionButton>(R.id.buttonAddShopItem)
         buttonAddItem.setOnClickListener {
-            val intent = ShopItemActivity.newIntentAddItem(this)
-            startActivity(intent)
+            if (isPortraitMode) {
+                val intent = ShopItemActivity.newIntentAddItem(this)
+                startActivity(intent)
+            } else {
+                launchShopItemFragment(ShopItemFragment.newInstanceAddItem())
+            }
         }
     }
 
@@ -83,9 +92,21 @@ class MainActivity : AppCompatActivity() {
 
     private fun setOnShopItemClickListener() {
         shopItemsListAdapter.onShopItemClickListener = {
-            val intent = ShopItemActivity.newIntentEditItem(this, it.id)
-            startActivity(intent)
+            if (isPortraitMode) {
+                val intent = ShopItemActivity.newIntentEditItem(this, it.id)
+                startActivity(intent)
+            } else {
+                launchShopItemFragment(ShopItemFragment.newInstanceEditItem(it.id))
+            }
         }
+    }
+
+    private fun launchShopItemFragment(fragment: ShopItemFragment) {
+        supportFragmentManager.popBackStack()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.shopItemFragmentContainer, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     companion object {
