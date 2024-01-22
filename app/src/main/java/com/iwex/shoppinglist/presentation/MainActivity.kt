@@ -1,6 +1,7 @@
 package com.iwex.shoppinglist.presentation
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentContainerView
 import androidx.lifecycle.ViewModelProvider
@@ -10,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.iwex.shoppinglist.R
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnEditingFinishedListener {
     private lateinit var viewModel: MainViewModel
 
     private lateinit var shopItemsListAdapter: ShopItemListAdapter
@@ -107,6 +108,11 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.shopItemFragmentContainer, fragment)
             .addToBackStack(null)
             .commit()
+    }
+
+    override fun onEditingFinished() {
+        supportFragmentManager.popBackStack()
+        Toast.makeText(this, getString(R.string.toast_success), Toast.LENGTH_SHORT).show()
     }
 
     companion object {

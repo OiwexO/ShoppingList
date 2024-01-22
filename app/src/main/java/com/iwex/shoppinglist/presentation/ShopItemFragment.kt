@@ -1,5 +1,6 @@
 package com.iwex.shoppinglist.presentation
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -15,6 +16,8 @@ import com.iwex.shoppinglist.R
 import com.iwex.shoppinglist.domain.ShopItem
 
 class ShopItemFragment : Fragment() {
+    private lateinit var onEditingFinishedListener: OnEditingFinishedListener
+
     private var screenMode: String = MODE_UNKNOWN
     private var shopItemId: Int = ShopItem.UNDEFINED_ID
 
@@ -25,6 +28,15 @@ class ShopItemFragment : Fragment() {
     private lateinit var buttonSave: Button
 
     private lateinit var viewModel: ShopItemViewModel
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnEditingFinishedListener) {
+            onEditingFinishedListener = context
+        } else {
+            throw RuntimeException("Activity ${context::class.java.canonicalName} should implement OnEditingFinishedListener")
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -121,7 +133,7 @@ class ShopItemFragment : Fragment() {
             tilCount.error = message
         }
         viewModel.shouldFinish.observe(viewLifecycleOwner) {
-            activity?.onBackPressed()
+            onEditingFinishedListener.onEditingFinished()
         }
     }
 
@@ -181,7 +193,7 @@ class ShopItemFragment : Fragment() {
     }
 
     companion object {
-        private const val TAG = "ShopItemActivity"
+        private const val TAG = "ShopItemFragment"
         private const val KEY_SCREEN_MODE = "screen_mode"
         private const val KEY_SHOP_ITEM_ID = "shop_item_id"
         private const val MODE_ADD = "mode_add"

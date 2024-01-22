@@ -3,11 +3,12 @@ package com.iwex.shoppinglist.presentation
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.iwex.shoppinglist.R
 import com.iwex.shoppinglist.domain.ShopItem
 
-class ShopItemActivity : AppCompatActivity() {
+class ShopItemActivity : AppCompatActivity(), OnEditingFinishedListener {
     private var screenMode = MODE_UNKNOWN
     private var shopItemId = ShopItem.UNDEFINED_ID
 
@@ -46,7 +47,14 @@ class ShopItemActivity : AppCompatActivity() {
             }
         supportFragmentManager.beginTransaction()
             .replace(R.id.shopItemFragmentContainer, fragment)
+            .addToBackStack(null)
             .commit()
+    }
+
+    override fun onEditingFinished() {
+        supportFragmentManager.popBackStack()
+        Toast.makeText(this, getString(R.string.toast_success), Toast.LENGTH_SHORT).show()
+        finish()
     }
 
     companion object {
