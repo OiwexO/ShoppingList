@@ -6,4 +6,5 @@
     <string name="label_save">Save</string>
     <string name="error_incorrect_name">Incorrect name</string>
     <string name="error_incorrect_count">Incorrect count</string>
+    <string name="toast_success">Success</string>
 </resources>
