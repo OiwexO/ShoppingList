@@ -51,10 +51,7 @@ class ShopItemFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_shop_item, container, false)
     }
 
-    override fun onViewCreated(
-        view: View,
-        savedInstanceState: Bundle?,
-    ) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[ShopItemViewModel::class.java]
         initViews(view)
@@ -115,21 +112,19 @@ class ShopItemFragment : Fragment() {
 
     private fun observeViewModel() {
         viewModel.errorInputName.observe(viewLifecycleOwner) {
-            val message =
-                if (it) {
-                    getString(R.string.error_incorrect_name)
-                } else {
-                    null
-                }
+            val message = if (it) {
+                getString(R.string.error_incorrect_name)
+            } else {
+                null
+            }
             tilName.error = message
         }
         viewModel.errorInputCount.observe(viewLifecycleOwner) {
-            val message =
-                if (it) {
-                    getString(R.string.error_incorrect_count)
-                } else {
-                    null
-                }
+            val message = if (it) {
+                getString(R.string.error_incorrect_count)
+            } else {
+                null
+            }
             tilCount.error = message
         }
         viewModel.shouldFinish.observe(viewLifecycleOwner) {
@@ -200,21 +195,17 @@ class ShopItemFragment : Fragment() {
         private const val MODE_EDIT = "mode_edit"
         private const val MODE_UNKNOWN = ""
 
-        fun newInstanceAddItem() =
-            ShopItemFragment().apply {
-                arguments =
-                    Bundle().apply {
-                        putString(KEY_SCREEN_MODE, MODE_ADD)
-                    }
+        fun newInstanceAddItem() = ShopItemFragment().apply {
+            arguments = Bundle().apply {
+                putString(KEY_SCREEN_MODE, MODE_ADD)
             }
+        }
 
-        fun newInstanceEditItem(shopItemId: Int) =
-            ShopItemFragment().apply {
-                arguments =
-                    Bundle().apply {
-                        putString(KEY_SCREEN_MODE, MODE_EDIT)
-                        putInt(KEY_SHOP_ITEM_ID, shopItemId)
-                    }
+        fun newInstanceEditItem(shopItemId: Int) = ShopItemFragment().apply {
+            arguments = Bundle().apply {
+                putString(KEY_SCREEN_MODE, MODE_EDIT)
+                putInt(KEY_SHOP_ITEM_ID, shopItemId)
             }
+        }
     }
 }

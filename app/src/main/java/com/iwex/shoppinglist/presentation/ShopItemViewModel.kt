@@ -31,10 +31,7 @@ class ShopItemViewModel() : ViewModel() {
     val shouldFinish: LiveData<Unit>
         get() = _shouldFinish
 
-    fun addShopItem(
-        inputName: String?,
-        inputCount: String?,
-    ) {
+    fun addShopItem(inputName: String?, inputCount: String?) {
         val name = parseInputString(inputName)
         val count = parseCount(inputCount)
         if (validateInput(name, count)) {
@@ -44,10 +41,7 @@ class ShopItemViewModel() : ViewModel() {
         }
     }
 
-    fun editShopItem(
-        inputName: String?,
-        inputCount: String?,
-    ) {
+    fun editShopItem(inputName: String?, inputCount: String?) {
         val name = parseInputString(inputName)
         val count = parseCount(inputCount)
         if (validateInput(name, count)) {
@@ -77,10 +71,7 @@ class ShopItemViewModel() : ViewModel() {
         }
     }
 
-    private fun validateInput(
-        name: String,
-        count: Int,
-    ): Boolean {
+    private fun validateInput(name: String, count: Int): Boolean {
         var result = true
         if (name.isBlank()) {
             result = false

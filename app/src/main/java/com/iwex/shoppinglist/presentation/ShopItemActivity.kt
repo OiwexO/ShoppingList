@@ -39,12 +39,11 @@ class ShopItemActivity : AppCompatActivity(), OnEditingFinishedListener {
     }
 
     private fun launchShopItemFragment() {
-        val fragment =
-            when (screenMode) {
-                MODE_ADD -> ShopItemFragment.newInstanceAddItem()
-                MODE_EDIT -> ShopItemFragment.newInstanceEditItem(shopItemId)
-                else -> throw RuntimeException("Unknown screen mode: $screenMode")
-            }
+        val fragment = when (screenMode) {
+            MODE_ADD -> ShopItemFragment.newInstanceAddItem()
+            MODE_EDIT -> ShopItemFragment.newInstanceEditItem(shopItemId)
+            else -> throw RuntimeException("Unknown screen mode: $screenMode")
+        }
         supportFragmentManager.beginTransaction()
             .replace(R.id.shopItemFragmentContainer, fragment)
             .addToBackStack(null)
@@ -69,11 +68,9 @@ class ShopItemActivity : AppCompatActivity(), OnEditingFinishedListener {
             Intent(context, ShopItemActivity::class.java)
                 .putExtra(EXTRA_SCREEN_MODE, MODE_ADD)
 
-        fun newIntentEditItem(
-            context: Context,
-            shopItemId: Int,
-        ) = Intent(context, ShopItemActivity::class.java)
-            .putExtra(EXTRA_SCREEN_MODE, MODE_EDIT)
-            .putExtra(EXTRA_SHOP_ITEM_ID, shopItemId)
+        fun newIntentEditItem(context: Context, shopItemId: Int) =
+            Intent(context, ShopItemActivity::class.java)
+                .putExtra(EXTRA_SCREEN_MODE, MODE_EDIT)
+                .putExtra(EXTRA_SHOP_ITEM_ID, shopItemId)
     }
 }
