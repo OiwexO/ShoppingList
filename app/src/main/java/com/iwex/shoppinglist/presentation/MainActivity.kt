@@ -60,27 +60,23 @@ class MainActivity : AppCompatActivity(), OnEditingFinishedListener {
     }
 
     private fun setOnShopItemHorizontalSwipeListener(recyclerView: RecyclerView) {
-        val horizontalSwipeCallback =
-            object : SimpleCallback(
-                0,
-                ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
-            ) {
-                override fun onMove(
-                    recyclerView: RecyclerView,
-                    viewHolder: RecyclerView.ViewHolder,
-                    target: RecyclerView.ViewHolder,
-                ): Boolean {
-                    return false
-                }
-
-                override fun onSwiped(
-                    viewHolder: RecyclerView.ViewHolder,
-                    direction: Int,
-                ) {
-                    val item = shopItemsListAdapter.currentList[viewHolder.adapterPosition]
-                    viewModel.deleteShopItem(item)
-                }
+        val horizontalSwipeCallback = object : SimpleCallback(
+            0,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder,
+            ): Boolean {
+                return false
             }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val item = shopItemsListAdapter.currentList[viewHolder.adapterPosition]
+                viewModel.deleteShopItem(item)
+            }
+        }
         val touchHelper = ItemTouchHelper(horizontalSwipeCallback)
         touchHelper.attachToRecyclerView(recyclerView)
     }
